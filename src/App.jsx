@@ -4,29 +4,14 @@ import { CreateDogForm } from "./Components/CreateDogForm";
 import { Dogs } from "./Components/Dogs";
 import { Section } from "./Components/Section";
 import "./fonts/RubikBubbles-Regular.ttf";
-import { addDogToDb } from "./fetch/add-dog";
-import { updateFavoriteForDog } from "./fetch/update-favorite";
-import { deleteDogFromDb } from "./fetch/delete-dog-from-db";
-import DogProvider, { DogContext } from "./Components/DogProvider";
+import { DogContext } from "./Components/DogProvider";
 
 function App() {
-  const { refetchDogs } = useContext(DogContext);
+  const { refetchDogs, dogs } = useContext(DogContext);
   const [showComponent, setShowComponent] = useState("all-dogs");
-  const [dogs, setDogs] = useState([]);
 
-  const deleteDog = (dogId) => {
-    deleteDogFromDb(dogId).then(() => refetchDogs());
-  };
 
-  const unfavoriteDog = (dogId) => {
-    updateFavoriteForDog({ dogId, isFavorite: false }).then(() =>
-      refetchDogs()
-    );
-  };
-
-  const favoriteDog = (dogId) => {
-    updateFavoriteForDog({ dogId, isFavorite: true }).then(() => refetchDogs());
-  };
+  
 
   const unfavorited = dogs.filter((dog) => dog.isFavorite === false);
   const favorited = dogs.filter((dog) => dog.isFavorite === true);
@@ -87,13 +72,7 @@ function App() {
         {["all-dogs", "favorite-dogs", "unfavorite-dogs"].includes(
           showComponent
         ) && (
-          <Dogs
-            label={"All Dogs"}
-            dogs={filteredDogs}
-            unfavoriteDog={unfavoriteDog}
-            deleteDog={deleteDog}
-            favoriteDog={favoriteDog}
-          />
+          <Dogs label={"All Dogs"} />
         )}
         {showComponent === "create-dog-form" && (
           <CreateDogForm />

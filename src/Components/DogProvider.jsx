@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
 import { addDogToDb } from "../fetch/add-dog";
+import { deleteDogFromDb } from "../fetch/delete-dog-from-db";
+import { updateFavoriteForDog } from "../fetch/update-favorite";
 
 export const DogContext = React.createContext();
 
@@ -23,9 +25,27 @@ const DogProvider = ({ children }) => {
     });
   };
 
+  const deleteDog = (dogId) => {
+    deleteDogFromDb(dogId).then(() => refetchDogs());
+  };
+
+  const unfavoriteDog = (dogId) => {
+    updateFavoriteForDog({ dogId, isFavorite: false }).then(() =>
+      refetchDogs()
+    );
+  };
+
+  const favoriteDog = (dogId) => {
+    updateFavoriteForDog({ dogId, isFavorite: true }).then(() => refetchDogs());
+  };
+
   const contextValue = {
+    dogs,
     refetchDogs,
     addDog,
+    deleteDog,
+    unfavoriteDog,
+    favoriteDog,
   };
 
   return (
