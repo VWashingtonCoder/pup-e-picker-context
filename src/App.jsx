@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
 import { CreateDogForm } from "./Components/CreateDogForm";
 import { Dogs } from "./Components/Dogs";
@@ -7,26 +7,12 @@ import "./fonts/RubikBubbles-Regular.ttf";
 import { addDogToDb } from "./fetch/add-dog";
 import { updateFavoriteForDog } from "./fetch/update-favorite";
 import { deleteDogFromDb } from "./fetch/delete-dog-from-db";
+import DogProvider, { DogContext } from "./Components/DogProvider";
 
 function App() {
+  const { refetchDogs } = useContext(DogContext);
   const [showComponent, setShowComponent] = useState("all-dogs");
   const [dogs, setDogs] = useState([]);
-
-  const refetchDogs = () => {
-    fetch("http://localhost:3000/dogs")
-      .then((response) => response.json())
-      .then(setDogs);
-  };
-
-  const addDog = (dog) => {
-    addDogToDb({
-      name: dog.name,
-      description: dog.description,
-      image: dog.image,
-    }).then(() => {
-      refetchDogs();
-    });
-  };
 
   const deleteDog = (dogId) => {
     deleteDogFromDb(dogId).then(() => refetchDogs());
@@ -110,7 +96,7 @@ function App() {
           />
         )}
         {showComponent === "create-dog-form" && (
-          <CreateDogForm addDog={addDog} />
+          <CreateDogForm />
         )}
       </Section>
     </div>

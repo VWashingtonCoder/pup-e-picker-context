@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { dogPictures } from "../assets/dog-pictures";
+import { DogContext } from "./DogProvider";
 
 // Todo: Get rid of Add Dog from Props
-export const CreateDogForm = ({
-  // ! Get rid of this from props
-  addDog,
-}) => {
+export const CreateDogForm = () => {
+  const { addDog } = useContext(DogContext);
   const [nameInput, setNameInput] = useState(""); //! This state must stay, don't try and move it to context
   const [descriptionInput, setDescriptionInput] = useState(""); //! This state must stay, don't try and move it to context
   const [selectedImage, setSelectedImage] = useState(dogPictures.BlueHeeler); //! This state must stay, don't try and move it to context

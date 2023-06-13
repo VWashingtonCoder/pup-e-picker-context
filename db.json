@@ -34,6 +34,13 @@
       "isFavorite": false,
       "image": "/src/assets/chihuahua.avif",
       "id": 20
+    },
+    {
+      "name": "A good dog",
+      "description": "A really good dog",
+      "isFavorite": false,
+      "image": "/src/assets/blue-heeler.png",
+      "id": 21
     }
   ]
 }
