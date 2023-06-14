@@ -4,7 +4,7 @@
       "name": "Cydney",
       "image": "/src/assets/blue-heeler.png",
       "description": "East Oro Bugatti South Supervisor Product cumbersome",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 6
     },
     {
@@ -25,13 +25,13 @@
       "name": "Laurine",
       "image": "/src/assets/corgi.png",
       "description": "Sausages pfft Rolls navigating male",
-      "isFavorite": true,
+      "isFavorite": false,
       "id": 18
     },
     {
       "name": "Jim",
       "description": "Jim is a dog, a very cute dog",
-      "isFavorite": false,
+      "isFavorite": true,
       "image": "/src/assets/chihuahua.avif",
       "id": 20
     }

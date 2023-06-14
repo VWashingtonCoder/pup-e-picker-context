@@ -8,11 +8,18 @@ export const DogContext = React.createContext();
 const DogProvider = ({ children }) => {
   const [showComponent, setShowComponent] = useState("all-dogs");
   const [dogs, setDogs] = useState([]);
+  const dogData = {
+    ["all-dogs"]: dogs,
+    ["favorite-dogs"]: dogs.filter((dog) => dog.isFavorite === true),
+    ["unfavorite-dogs"]: dogs.filter((dog) => dog.isFavorite === false),
+  };
 
   const refetchDogs = () => {
     fetch("http://localhost:3000/dogs")
       .then((response) => response.json())
-      .then(setDogs);
+      .then((res) => {
+        setDogs(res);
+      });
   };
 
   const addDog = (dog) => {
@@ -39,13 +46,37 @@ const DogProvider = ({ children }) => {
     updateFavoriteForDog({ dogId, isFavorite: true }).then(() => refetchDogs());
   };
 
+  const onClickFavorited = () => {
+    showComponent === "favorite-dogs"
+      ? setShowComponent("all-dogs")
+      : setShowComponent("favorite-dogs");
+  };
+
+  const onClickUnfavorited = () => {
+    showComponent === "unfavorite-dogs"
+      ? setShowComponent("all-dogs")
+      : setShowComponent("unfavorite-dogs");
+  };
+
+  const onClickCreateDog = () => {
+    showComponent === "create-dog-form"
+      ? setShowComponent("all-dogs")
+      : setShowComponent("create-dog-form");
+  };
+
   const contextValue = {
-    dogs,
+    dogs: dogData[showComponent],
     refetchDogs,
     addDog,
     deleteDog,
     unfavoriteDog,
     favoriteDog,
+    onClickFavorited,
+    onClickUnfavorited,
+    onClickCreateDog,
+    showComponent,
+    favoriteDogCount: dogData["favorite-dogs"].length,
+    unfavoriteDogCount: dogData["unfavorite-dogs"].length,
   };
 
   return (
